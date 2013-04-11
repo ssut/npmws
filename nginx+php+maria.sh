@@ -74,10 +74,7 @@ function check_py_apt {
 function install_nginx {
 	echo "# INSTALLING NGINX"
 	
-	NGINX_LW="stable"
-	if [ "$NGINX_PPA" == 2 ]; then
-		NGINX_LW="development"
-	fi
+	[ "$NGINX_PPA" == 2 ] & NGINX_LW="stable" || NGINX_LW="development"
 	
 	add-apt-repository ppa:nginx/$NGINX_LW -y
 	apt_cache_update
@@ -181,7 +178,7 @@ function setting_nginx {
 	chmod 755 /etc/nginx/sites-available/default
 
 	chmod -R 777 /usr/share/nginx/html/*
-	chmod -R 755 /usr/share/nginx/html
+	chmod 755 /usr/share/nginx/html
 }
 
 clear
