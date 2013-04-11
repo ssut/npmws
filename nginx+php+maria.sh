@@ -18,7 +18,6 @@ fi
 
 function apt_cache_update {
 	echo "# Updating APT(Advanced Packaging Tool) cache"
-	./test.sh > /dev/null
 	apt-get update > /dev/null
 }
 
