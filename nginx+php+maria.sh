@@ -181,7 +181,7 @@ function setting_nginx {
 	chmod 755 /etc/nginx/sites-available/default
 
 	chmod -R 777 /usr/share/nginx/html/*
-	chmod	-R 755 /usr/share/nginx/html
+	chmod -R 755 /usr/share/nginx/html
 }
 
 clear
