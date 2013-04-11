@@ -16,6 +16,12 @@ if [ "$OS" != "ubuntu" ] && [ "$OS" != "debian" ]; then
 	exit
 fi
 
+function apt_cache_update {
+	echo "# Updating APT(Advanced Packaging Tool) cache"
+	./test.sh > /dev/null
+	apt-get update > /dev/null
+}
+
 function select_nginx {
 		echo ""
 		echo "# Select NGINX PPA(Personal Package Archives)"
@@ -74,7 +80,7 @@ function install_nginx {
 	fi
 	
 	add-apt-repository ppa:nginx/$NGINX_LW -y
-	apt-get update 
+	apt_cache_update
 	apt-get install nginx -y
 }
 
@@ -82,7 +88,7 @@ function install_php5 {
 	echo "# INSTALLING PHP5"
 	
 	add-apt-repository ppa:ondrej/php5 -y
-	apt-get update
+	apt_cache_update
 	apt-get install build-essential gcc g++ -y
 	apt-get install libcurl3-openssl-dev -y
 	apt-get install libpcre3 -y
@@ -109,8 +115,10 @@ function install_mariadb {
 		add-apt-repository 'deb http://ftp.kaist.ac.kr/mariadb/repo/10.0/ubuntu precise main' -y
 	fi
 	
-	apt-get update
+	apt_cache_update
 	apt-get install mariadb-server -y
+
+	echo "# INSTALLING PHP5-MySQL (Extension for connect to database server)"
 	apt-get install php5-mysql -y
 }
 
@@ -175,7 +183,6 @@ function setting_nginx {
 	chmod -R 777 /usr/share/nginx/html/*
 	chmod	-R 755 /usr/share/nginx/html
 }
-
 
 clear
 echo "---------------------------------------------------------------"
