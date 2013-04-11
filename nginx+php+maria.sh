@@ -74,7 +74,7 @@ function check_py_apt {
 function install_nginx {
 	echo "# INSTALLING NGINX"
 	
-	[ "$NGINX_PPA" == 2 ] & NGINX_LW="stable" || NGINX_LW="development"
+	[ "$NGINX_PPA" == 2 ] && NGINX_LW="stable" || NGINX_LW="development"
 	
 	add-apt-repository ppa:nginx/$NGINX_LW -y
 	apt_cache_update
