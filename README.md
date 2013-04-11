@@ -33,17 +33,16 @@ Ubuntu (>= 11.04), Debian
 ```
 
 2. Select nginx/mariadb version.
-example)
 ```bash
 	# Select NGINX PPA(Personal Package Archives)
 		1) Stable
 		2) Development
-	Enter: **1 or 2**
+	Enter: 
 
 	# Select MariaDB version
 		1) 5.5 Stable
 		2) 10.0 Alpha
-	Enter: **1 or 2**
+	Enter: 
 ```
 
 3. During installation, Prompt for a password or require some action on the keyboard.
