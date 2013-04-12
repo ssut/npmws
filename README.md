@@ -12,10 +12,12 @@ Ubuntu (>= 11.04), Debian
 * nginx web server (stable/development, with config-tweak)
 * php 5.4 (the latest version) -> php-fpm(fastcgi process manager)
 * mariadb (5.5-stable / 10.0-alpha, better than MySQL)
+* phpMyAdmin (the latest version)
 
 # PHP Extensions
 
 * intl
+* cURL
 * gd
 * mcypt
 * mhash
@@ -26,13 +28,9 @@ Ubuntu (>= 11.04), Debian
 # Installation
 
 1. You can install this via the command line with either `curl` or `wget`. (Please use `sudo` or `log in as root` to run this command)
-
 via `curl`
-
 `curl -L https://raw.github.com/Previrtu/npmws/master/nginx+php+maria.sh | sh`
-
 via `wget`
-
 `wget --no-check-certificate https://raw.github.com/Previrtu/npmws/master/nginx+php+maria.sh -O - | sh`
 
 2. Select nginx/mariadb version.

@@ -16,14 +16,18 @@ if [ "$OS" != "ubuntu" ] && [ "$OS" != "debian" ]; then
 	exit
 fi
 
+function printMessage() {
+	echo -e "\e[1;37m# $1\033[0m"
+}
+
 function apt_cache_update {
-	echo "# Updating APT(Advanced Packaging Tool) cache"
+	printMessage "# Updating APT(Advanced Packaging Tool) cache"
 	apt-get update > /dev/null
 }
 
 function select_nginx {
 		echo ""
-		echo "# Select NGINX PPA(Personal Package Archives)"
+		printMessage "# Select NGINX PPA(Personal Package Archives)"
 		echo "	1) Stable"
 		echo "	2) Development"
 		echo -n "Enter: "
@@ -35,7 +39,7 @@ function select_nginx {
 
 function select_mariadb {
 	echo ""
-	echo "# Select MariaDB version"
+	printMessage "# Select MariaDB version"
 	echo "	1) 5.5 Stable"
 	echo "	2) 10.0 Alpha"
 	echo -n "Enter: "
@@ -50,7 +54,7 @@ function select_mariadb {
 }
 
 function func_install {
-	echo -n "Are you sure want to continue? (y/n): "
+	echo -en "\033[1mAre you sure want to continue? (y/n): \033[0m"
 	read YN 
 	YN=`echo $YN | tr "[:lower:]" "[:upper:]"`
 	if [ "$YN" != "Y" ] && [ "$YN" != "N" ]; then
@@ -71,7 +75,7 @@ function check_py_apt {
 }
 
 function install_nginx {
-	echo "# INSTALLING NGINX"
+	printMessage "# INSTALLING NGINX"
 	
 	[ "$NGINX_PPA" == 2 ] && NGINX_LW="stable" || NGINX_LW="development"
 	
@@ -81,7 +85,7 @@ function install_nginx {
 }
 
 function install_php5 {
-	echo "# INSTALLING PHP5"
+	printMessage "# INSTALLING PHP5"
 	
 	add-apt-repository ppa:ondrej/php5 -y
 	apt_cache_update
@@ -89,11 +93,11 @@ function install_php5 {
 	apt-get install libcurl3-openssl-dev -y
 	apt-get install libpcre3 -y
 	apt-get install libpcre3-dev -y	
-	apt-get install php5-common php5-cgi php5-cli php5-fpm php5-gd php5-cli php5-mcrypt php5-tidy -y
+	apt-get install php5-common php5-cgi php5-cli php5-fpm php5-gd php5-cli php5-mcrypt php5-tidy php5-curl -y
 	apt-get install php5-intl php5-dev -y
 	apt-get install php-pear -y
 
-	echo "# Please press return key."
+	printMessage "# Please press return key."
 	sleep 1
 	pecl install apc
 	echo "extension=apc.so" >> /etc/php5/mods-available/apc.ini
@@ -101,7 +105,7 @@ function install_php5 {
 }
 
 function install_mariadb {
-	echo "# INSTALLING MariaDB"
+	printMessage "# INSTALLING MariaDB"
 	
 	if [ "$MARIADB_VER" == "5.5" ]; then
 		apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
@@ -114,12 +118,12 @@ function install_mariadb {
 	apt_cache_update
 	apt-get install mariadb-server -y
 
-	echo "# INSTALLING PHP5-MySQL (Extension for connect to database server)"
+	printMessage "# INSTALLING PHP5-MySQL (Extension for connect to database server)"
 	apt-get install php5-mysql -y
 }
 
 function setting_nginx {
-	echo "# SETTING NGINX"
+	printMessage "# SETTING NGINX"
 	
 	echo "location ~ \.php\$ {" >> /etc/nginx/php
 	echo "	fastcgi_pass unix:/var/run/php5-fpm.sock;" >> /etc/nginx/php
@@ -150,7 +154,8 @@ function setting_nginx {
 	echo "	worker_connections 1024;" >> /etc/nginx/nginx.conf
 	echo "	use epoll;" >> /etc/nginx/nginx.conf
 	echo "	multi_accept on;" >> /etc/nginx/nginx.conf
-	echo "" >> /etc/nginx/nginx.conf
+	echo "}" >> /etc/nginx/nginx.conf
+	echo ""
 	echo "http {" >> /etc/nginx/nginx.conf
 	echo "	sendfile on;" >> /etc/nginx/nginx.conf
 	echo "	tcp_nopush on;" >> /etc/nginx/nginx.conf
@@ -177,12 +182,24 @@ function setting_nginx {
 	chmod 755 /etc/nginx/sites-available/default
 
 	chmod -R 777 /usr/share/nginx/html/*
-	chmod 755 /usr/share/nginx/html
+	chmod 707 /usr/share/nginx/html
+}
+
+function install_phpmyadmin {
+	printMessage "# INSTALLING PHPMYADMIN"
+	if [ -f /usr/bin/axel ]; then
+		axel "http://d.isdev.kr/skydrivedl.php?id=4AC97C30D70CBFEF%21250&file=phpMyAdmin-3.5.8-all-languages.tar.gz" -o /usr/share/nginx/html/pma.tar.gz
+	else
+		wget "http://d.isdev.kr/skydrivedl.php?id=4AC97C30D70CBFEF%21250&file=phpMyAdmin-3.5.8-all-languages.tar.gz" -O /usr/share/nginx/html/pma.tar.gz
+	fi
+	tar zxf /usr/share/nginx/html/pma.tar.gz -C /usr/share/nginx/html/
+	mv /usr/share/nginx/html/phpMyAdmin-*/ /usr/share/nginx/html/phpmyadmin/
+	chmod -R 755 /usr/share/nginx/html/phpmyadmin/
 }
 
 clear
 echo "---------------------------------------------------------------"
-echo "# Welcome to NGINX+PHP+MariaDB Installer for Ubuntu/Debian!"
+echo -e "# Welcome to \033[1mNGINX+PHP+MariaDB\033[0m Installer for Ubuntu/Debian!"
 echo "# Script version 1.0"
 echo "---------------------------------------------------------------"
 select_nginx
@@ -203,14 +220,15 @@ check_py_apt
 install_nginx
 install_php5
 install_mariadb
+install_phpmyadmin
 
-echo "# Stopping Nginx service"
+printMessage "# Stopping Nginx service"
 service nginx stop
 
-echo "# Configuring nginx"
+printMessage "# Configuring nginx"
 setting_nginx
 
-echo "# Starting nginx/php5-fpm/mariadb service"
+printMessage "# Starting nginx/php5-fpm/mariadb service"
 service nginx start
 service php5-fpm restart
 service mysql restart
@@ -218,15 +236,18 @@ service mysql restart
 echo ""
 clear
 echo "---------------------------------------------------------------"
-echo "# Installed NGINX+PHP+MariaDB."
+echo -e "\033[34m # Installed \033[1mNGINX+PHP+MariaDB\033[0m.\033[0m"
 echo "---------------------------------------------------------------"
 echo "* NGINX: service nginx {start|stop|restart|reload|status}"
 echo "	/etc/nginx/"
 echo "* PHP: service php5-fpm {start|stop|restart|status}"
 echo "	/etc/php5/php5-fpm/"
-echo "* MariaDB: service mysql {start|stop|restat|status}"
+echo "* MariaDB: service mysql {start|stop|restart|status}"
 echo "	/etc/mysql/"
 echo "---------------------------------------------------------------"
-echo "  NGINX+PHP+MariaDB by Previrtu(previrtu@isdev.kr)"
+echo "* phpMyAdmin: http://localhost/phpmyadmin"
 echo "---------------------------------------------------------------"
+echo -e "\033[37m  NGINX+PHP+MariaDB by Previrtu(previrtu@isdev.kr)\033[0m"
+echo "---------------------------------------------------------------"
+
 
