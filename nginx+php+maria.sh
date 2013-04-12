@@ -125,58 +125,66 @@ function install_mariadb {
 function setting_nginx {
 	printMessage "SETTING NGINX"
 	
-	echo "location ~ \.php\$ {" >> /etc/nginx/php
-	echo "	fastcgi_pass unix:/var/run/php5-fpm.sock;" >> /etc/nginx/php
-	echo "	fastcgi_index index.php;" >> /etc/nginx/php
-	echo "	fastcgi_split_path_info ^(.+\.php)(/.+)\$;" >> /etc/nginx/php
-	echo "	fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;" >> /etc/nginx/php
-	echo "	include /etc/nginx/fastcgi_params;" >> /etc/nginx/php
-	echo "}" >> /etc/nginx/php
+	cat <<nginx-config > /etc/nginx/php
+locataion ~ \.php$ {
+	fastcgi_pass unix:/var/run/php5-fpm.sock;
+	fastcgi_index index.php;
+	fastcgi_split_path_info ^(.+\.php)(/.+)$;
+	fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+	include /etc/nginx/fastcgi_params;
+}
+nginx-config
 	
 	rm -f /etc/nginx/sites-available/default
-	echo "server {" >> /etc/nginx/sites-available/default
-	echo "	listen 80 default_server;" >> /etc/nginx/sites-available/default
-	echo "	" >> /etc/nginx/sites-available/default
-	echo "	root /usr/share/nginx/html;" >> /etc/nginx/sites-available/default
-	echo "	index index.php index.html index.htm;" >> /etc/nginx/sites-available/default
-	echo "	" >> /etc/nginx/sites-available/default
-	echo "	server_name localhost 127.0.0.1;" >> /etc/nginx/sites-available/default
-	echo "	" >> /etc/nginx/sites-available/default
-	echo "	include php;" >> /etc/nginx/sites-available/default
-	echo "}" >> /etc/nginx/sites-available/default
+	rm -rf /etc/nginx/sites-available/
+	rm -rf /etc/nginx/sites-enabled/
+
+	cat <<nginx-config > /etc/nginx/conf.d/localhost
+server {
+	listen 80 default_server;
+	
+	root /usr/share/nginx/htm;
+	index index.php index.html index.htm;
+	
+	server_name localhost 127.0.0.1;
+	
+	include php;
+}
+nginx-config
 
 	mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
-	echo "user www-data;" >> /etc/nginx/nginx.conf
-	echo "worker_processes 4;" >> /etc/nginx/nginx.conf
-	echo "#pid /run/nginx.pid;" >> /etc/nginx/nginx.conf
-	echo "" >> /etc/nginx/nginx.conf
-	echo "events {" >> /etc/nginx/nginx.conf
-	echo "	worker_connections 1024;" >> /etc/nginx/nginx.conf
-	echo "	use epoll;" >> /etc/nginx/nginx.conf
-	echo "	multi_accept on;" >> /etc/nginx/nginx.conf
-	echo "}" >> /etc/nginx/nginx.conf
-	echo ""
-	echo "http {" >> /etc/nginx/nginx.conf
-	echo "	sendfile on;" >> /etc/nginx/nginx.conf
-	echo "	tcp_nopush on;" >> /etc/nginx/nginx.conf
-	echo "	tcp_nodelay on;" >> /etc/nginx/nginx.conf
-	echo "	" >> /etc/nginx/nginx.conf
-	echo "	keepalive_timeout 5;" >> /etc/nginx/nginx.conf
-	echo "	types_hash_max_size 2048;" >> /etc/nginx/nginx.conf
-	echo "	server_tokens off;" >> /etc/nginx/nginx.conf
-	echo "	" >> /etc/nginx/nginx.conf
-	echo "	include /etc/nginx/mime.types;" >> /etc/nginx/nginx.conf
-	echo "	default_type application/octet-stream;" >> /etc/nginx/nginx.conf
-	echo "	" >> /etc/nginx/nginx.conf
-	echo "	access_log /var/log/nginx/access.log;" >> /etc/nginx/nginx.conf
-	echo "	error_log /var/log/nginx.error.log;" >> /etc/nginx/nginx.conf
-	echo "	" >> /etc/nginx/nginx.conf
-	echo "	gzip on;" >> /etc/nginx/nginx.conf
-	echo "	gzip_disable \"msie6\";" >> /etc/nginx/nginx.conf
-	echo "	" >> /etc/nginx/nginx.conf
-	echo "	include /etc/nginx/conf.d/*.conf;" >> /etc/nginx/nginx.conf
-	echo "	include /etc/nginx/sites-enabled/*;" >> /etc/nginx/nginx.conf
-	echo "}" >> /etc/nginx/nginx.conf
+	cat <<nginx-config > /etc/nginx/nginx.conf
+user www-data;
+worker_process 4;
+#pid /run/nginx.pid;
+
+events {
+	worker_connections 1024;
+	use epoll;
+	multi_accept on;
+}
+
+http {
+	sendfile on;
+	tcp_nopush on;
+	tcp_nodelay on;
+	
+	keepalive_timeout 5;
+	types_hash_max_size 2048;
+	server_tokens off;
+	
+	include /etc/nginx/mime.types;
+	default_type application/octet-stream;
+	
+	access_log /var/log/nginx/access.log;
+	error_log /var/log/nginx/error.log;
+	
+	gzip on;
+	gzip_disable "msie6";
+	
+	include /etc/nginx/conf.d/*.conf;
+}
+nginx-config
 	
 	chmod 755 /etc/nginx/nginx.conf
 	chmod 755 /etc/nginx/sites-available/default
@@ -200,7 +208,6 @@ function install_phpmyadmin {
 clear
 echo "---------------------------------------------------------------"
 echo -e "# Welcome to \033[1mNGINX+PHP+MariaDB\033[0m Installer for Ubuntu/Debian!"
-echo "# Script version 1.0"
 echo "---------------------------------------------------------------"
 select_nginx
 select_mariadb
