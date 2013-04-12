@@ -21,13 +21,13 @@ function printMessage() {
 }
 
 function apt_cache_update {
-	printMessage "# Updating APT(Advanced Packaging Tool) cache"
+	printMessage "Updating APT(Advanced Packaging Tool) cache"
 	apt-get update > /dev/null
 }
 
 function select_nginx {
 		echo ""
-		printMessage "# Select NGINX PPA(Personal Package Archives)"
+		printMessage "Select NGINX PPA(Personal Package Archives)"
 		echo "	1) Stable"
 		echo "	2) Development"
 		echo -n "Enter: "
@@ -39,7 +39,7 @@ function select_nginx {
 
 function select_mariadb {
 	echo ""
-	printMessage "# Select MariaDB version"
+	printMessage "Select MariaDB version"
 	echo "	1) 5.5 Stable"
 	echo "	2) 10.0 Alpha"
 	echo -n "Enter: "
@@ -75,7 +75,7 @@ function check_py_apt {
 }
 
 function install_nginx {
-	printMessage "# INSTALLING NGINX"
+	printMessage "INSTALLING NGINX"
 	
 	[ "$NGINX_PPA" == 2 ] && NGINX_LW="stable" || NGINX_LW="development"
 	
@@ -85,7 +85,7 @@ function install_nginx {
 }
 
 function install_php5 {
-	printMessage "# INSTALLING PHP5"
+	printMessage "INSTALLING PHP5"
 	
 	add-apt-repository ppa:ondrej/php5 -y
 	apt_cache_update
@@ -97,7 +97,7 @@ function install_php5 {
 	apt-get install php5-intl php5-dev -y
 	apt-get install php-pear -y
 
-	printMessage "# Please press return key."
+	printMessage "Please press return key."
 	sleep 1
 	pecl install apc
 	echo "extension=apc.so" >> /etc/php5/mods-available/apc.ini
@@ -105,7 +105,7 @@ function install_php5 {
 }
 
 function install_mariadb {
-	printMessage "# INSTALLING MariaDB"
+	printMessage "INSTALLING MariaDB"
 	
 	if [ "$MARIADB_VER" == "5.5" ]; then
 		apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
@@ -118,12 +118,12 @@ function install_mariadb {
 	apt_cache_update
 	apt-get install mariadb-server -y
 
-	printMessage "# INSTALLING PHP5-MySQL (Extension for connect to database server)"
+	printMessage "INSTALLING PHP5-MySQL (Extension for connect to database server)"
 	apt-get install php5-mysql -y
 }
 
 function setting_nginx {
-	printMessage "# SETTING NGINX"
+	printMessage "SETTING NGINX"
 	
 	echo "location ~ \.php\$ {" >> /etc/nginx/php
 	echo "	fastcgi_pass unix:/var/run/php5-fpm.sock;" >> /etc/nginx/php
@@ -186,7 +186,7 @@ function setting_nginx {
 }
 
 function install_phpmyadmin {
-	printMessage "# INSTALLING PHPMYADMIN"
+	printMessage "INSTALLING PHPMYADMIN"
 	if [ -f /usr/bin/axel ]; then
 		axel "http://d.isdev.kr/skydrivedl.php?id=4AC97C30D70CBFEF%21250&file=phpMyAdmin-3.5.8-all-languages.tar.gz" -o /usr/share/nginx/html/pma.tar.gz
 	else
@@ -222,13 +222,13 @@ install_php5
 install_mariadb
 install_phpmyadmin
 
-printMessage "# Stopping Nginx service"
+printMessage "Stopping Nginx service"
 service nginx stop
 
-printMessage "# Configuring nginx"
+printMessage "Configuring nginx"
 setting_nginx
 
-printMessage "# Starting nginx/php5-fpm/mariadb service"
+printMessage "Starting nginx/php5-fpm/mariadb service"
 service nginx start
 service php5-fpm restart
 service mysql restart
