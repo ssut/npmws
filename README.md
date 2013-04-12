@@ -25,12 +25,15 @@ Ubuntu (>= 11.04), Debian
 
 # Installation
 
-1. Enter this command in terminal.  Please use `sudo` or `log in as root` to run this command.
-```bash
-	wget -o npmws.sh https://raw.github.com/Previrtu/npmws/master/nginx+php+maria.sh
-	chmod +x npmws.sh
-	./npmws.sh
-```
+1. You can install this via the command line with either `curl` or `wget`. (Please use `sudo` or `log in as root` to run this command)
+
+h4. via `curl`
+
+@curl -L https://raw.github.com/Previrtu/npmws/master/nginx+php+maria.sh | sh@
+
+h4. via `wget`
+
+@wget --no-check-certificate https://raw.github.com/Previrtu/npmws/master/nginx+php+maria.sh -O - | sh@
 
 2. Select nginx/mariadb version.
 ```bash
