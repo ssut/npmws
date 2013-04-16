@@ -182,7 +182,7 @@ http {
 	gzip on;
 	gzip_disable "msie6";
 	
-	include /etc/nginx/conf.d/*.conf;
+	include /etc/nginx/conf.d/*;
 }
 nginx-config
 	
