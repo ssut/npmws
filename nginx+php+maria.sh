@@ -155,7 +155,7 @@ nginx-config
 	mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 	cat <<nginx-config > /etc/nginx/nginx.conf
 user www-data;
-worker_process 4;
+worker_processes 4;
 #pid /run/nginx.pid;
 
 events {
