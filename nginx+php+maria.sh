@@ -126,7 +126,7 @@ function setting_nginx {
 	printMessage "SETTING NGINX"
 	
 	cat <<nginx-config > /etc/nginx/php
-locataion ~ \.php$ {
+location ~ \.php$ {
 	fastcgi_pass unix:/var/run/php5-fpm.sock;
 	fastcgi_index index.php;
 	fastcgi_split_path_info ^(.+\.php)(/.+)$;
@@ -143,7 +143,7 @@ nginx-config
 server {
 	listen 80 default_server;
 	
-	root /usr/share/nginx/htm;
+	root /usr/share/nginx/html;
 	index index.php index.html index.htm;
 	
 	server_name localhost 127.0.0.1;
@@ -182,7 +182,7 @@ http {
 	gzip on;
 	gzip_disable "msie6";
 	
-	include /etc/nginx/conf.d/*.conf;
+	include /etc/nginx/conf.d/*;
 }
 nginx-config
 	
