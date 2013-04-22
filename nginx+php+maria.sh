@@ -93,7 +93,8 @@ function install_php5 {
 	apt-get install libcurl3-openssl-dev -y
 	apt-get install libpcre3 -y
 	apt-get install libpcre3-dev -y	
-	apt-get install php5-common php5-cgi php5-cli php5-fpm php5-gd php5-cli php5-mcrypt php5-tidy php5-curl php5-xdebug -y
+	apt-get install sqlite -y
+	apt-get install php5-common php5-cgi php5-cli php5-fpm php5-gd php5-cli php5-mcrypt php5-tidy php5-curl php5-xdebug php5-sqlite -y
 	apt-get install php5-intl php5-dev -y
 	apt-get install php-pear -y
 

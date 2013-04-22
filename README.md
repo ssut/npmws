@@ -22,6 +22,10 @@ Ubuntu (>= 11.04), Debian
 * mcypt
 * mhash
 * tidy
+* sqlite (pdo)
+* mysql (pdo)
+* mysqli
+* xdebug
 * pear
 * apc (performance)
 
