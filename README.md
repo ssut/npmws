@@ -5,7 +5,7 @@ NPMWS is "NGINX+PHP+MariaDB Web Server Installer".
 
 # Support OS
 
-Ubuntu (>= 11.04), Debian
+Ubuntu (>= 11.04), Debian, Linux Mint (LDME/Nadia)
 
 # Packages
 
