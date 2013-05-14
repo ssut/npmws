@@ -11,8 +11,8 @@ fi
 OS=$(awk '/DISTRIB_ID=/' /etc/*-release | sed 's/DISTRIB_ID=//' | tr '[:upper:]' '[:lower:]')
 NGINX_PPA=0
 MARIADB_VER="5.5"
-if [ "$OS" != "ubuntu" ] && [ "$OS" != "debian" ]; then
-	echo "this script is only executable from Ubuntu/Debian."
+if [ "$OS" != "ubuntu" ] && [ "$OS" != "debian" ] && [ "$OS" != "mint" ]; then
+	echo "this script is only executable from Ubuntu/MintLinux/Debian."
 	exit
 fi
 
@@ -28,7 +28,7 @@ function apt_cache_update {
 function select_nginx {
 		echo ""
 		printMessage "Select NGINX PPA(Personal Package Archives)"
-		echo "	1) Stable"
+		echo "	1) Stable << Recommend"
 		echo "	2) Development"
 		echo -n "Enter: "
 		read NGINX_PPA
@@ -41,7 +41,7 @@ function select_mariadb {
 	echo ""
 	printMessage "Select MariaDB version"
 	echo "	1) 5.5 Stable"
-	echo "	2) 10.0 Alpha"
+	echo "	2) 10.0 Alpha << Recommend"
 	echo -n "Enter: "
 	read MARIADB_SELECT
 	if [ "$MARIADB_SELECT" != 1 ] && [ "$MARIADB_SELECT" != 2 ]; then
@@ -101,8 +101,12 @@ function install_php5 {
 	printMessage "Please press return key."
 	sleep 1
 	pecl install apc
-	echo "extension=apc.so" >> /etc/php5/mods-available/apc.ini
-	ln -s /etc/php5/mods-available/apc.ini /etc/php5/conf.d/apc.ini
+	if [ -d "/etc/php5/mods-available/" ]; then
+		echo "extension=apc.so" >> /etc/php5/mods-available/apc.ini
+		ln -s /etc/php5/mods-available/apc.ini /etc/php5/conf.d/apc.ini
+	elif [ -d "/etc/php5/conf.d/" ]; then
+		echo "extension=apc.so" >> /etc/php5/conf.d/apc.ini
+	fi
 }
 
 function install_mariadb {
