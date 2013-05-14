@@ -33,9 +33,12 @@ Ubuntu (>= 11.04), Debian
 
 1. You can install this via the command line with either `curl` or `wget`. (Please use `sudo` or `log in as root` to run this command)
 * via `curl`
- `curl -L https://raw.github.com/Previrtu/npmws/master/nginx+php+maria.sh | sh`
+ `curl https://raw.github.com/Previrtu/npmws/master/nginx+php+maria.sh`
 * via `wget`
- `wget --no-check-certificate https://raw.github.com/Previrtu/npmws/master/nginx+php+maria.sh -O - | sh`
+ `wget https://raw.github.com/Previrtu/npmws/master/nginx+php+maria.sh`
+* change permission and execute script.
+ `chmod +x nginx+php+maria.sh`
+ `./nginx+php+maria.sh`
 
 2. Select nginx/mariadb version.
 ```bash
