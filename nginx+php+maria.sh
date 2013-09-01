@@ -11,7 +11,10 @@ fi
 OS=$(awk '/DISTRIB_ID=/' /etc/*-release | sed 's/DISTRIB_ID=//' | tr '[:upper:]' '[:lower:]')
 NGINX_PPA=0
 MARIADB_VER="5.5"
-if [ "$OS" != "ubuntu" ] && [ "$OS" != "debian" ] && [ "$OS" != "mint" ]; then
+#if [ "$OS" != "ubuntu" ] && [ "$OS" != "debian" ] && [ "$OS" != "mint" ]; then
+if [ -f /usr/bin/apt-get ] && [ -f /usr/bin/aptitude ]; then
+	echo "Detected $OS"
+else
 	echo "this script is only executable from Ubuntu/MintLinux/Debian."
 	exit
 fi
