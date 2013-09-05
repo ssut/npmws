@@ -101,6 +101,9 @@ function install_php5 {
 	apt-get install php5-intl php5-dev -y
 	apt-get install php-pear -y
 
+	# Fix dependency
+	apt-get purge apache2 libapache2-mod-php5 -y
+
 	printMessage "Please press return key."
 	sleep 1
 	pecl install apc
