@@ -117,10 +117,10 @@ function install_mariadb {
 	
 	if [ "$MARIADB_VER" == "5.5" ]; then
 		apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-		add-apt-repository 'deb http://ftp.kaist.ac.kr/mariadb/repo/5.5/ubuntu precise main' -y
+		add-apt-repository 'deb http://mirror.yongbok.net/mariadb/repo/10.0/ubuntu raring main' -y
 	elif [ "$MARIADB_VER" == "10.0" ]; then
 		apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-		add-apt-repository 'deb http://ftp.kaist.ac.kr/mariadb/repo/10.0/ubuntu precise main' -y
+		add-apt-repository 'deb http://mirror.yongbok.net/mariadb/repo/10.0/ubuntu precise main' -y
 	fi
 	
 	apt_cache_update
