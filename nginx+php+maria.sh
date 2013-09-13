@@ -11,6 +11,7 @@ fi
 OS=$(awk '/DISTRIB_ID=/' /etc/*-release | sed 's/DISTRIB_ID=//' | tr '[:upper:]' '[:lower:]')
 NGINX_PPA=0
 MARIADB_VER="5.5"
+PHP_VER="php5-oldstable"
 #if [ "$OS" != "ubuntu" ] && [ "$OS" != "debian" ] && [ "$OS" != "mint" ]; then
 if [ -f /usr/bin/apt-get ] && [ -f /usr/bin/aptitude ]; then
 	echo "Detected $OS"
@@ -43,8 +44,8 @@ function select_nginx {
 function select_mariadb {
 	echo ""
 	printMessage "Select MariaDB version"
-	echo "	1) 5.5 Stable"
-	echo "	2) 10.0 Alpha << Recommend"
+	echo "	1) 5.5 Stable << Recommend"
+	echo "	2) 10.0 Alpha"
 	echo -n "Enter: "
 	read MARIADB_SELECT
 	if [ "$MARIADB_SELECT" != 1 ] && [ "$MARIADB_SELECT" != 2 ]; then
@@ -53,6 +54,22 @@ function select_mariadb {
 		MARIADB_VER="5.5"
 	elif [ "$MARIADB_SELECT" == 2 ]; then
 		MARIADB_VER="10.0"
+	fi
+}
+
+function select_php {
+	echo ""
+	printMessage "Select PHP version"
+	echo "  1) 5.4 << Recommend"
+	echo "  2) 5.5"
+	echo -n "Enter: "
+	read PHP_SELECT
+	if [ "$PHP_SELECT" != 1 ] && [ "$PHP_SELECT" != 2 ]; then
+		select_php
+	elif [ "$PHP_SELECT" == 1 ]; then
+		PHP_VER = "php5-oldstable"
+	elif [ "$PHP_SELECT" == 2 ]; then
+		PHP_VER = "php5"
 	fi
 }
 
@@ -90,7 +107,7 @@ function install_nginx {
 function install_php5 {
 	printMessage "INSTALLING PHP5"
 	
-	add-apt-repository ppa:ondrej/php5 -y
+	add-apt-repository ppa:ondrej/$PHP_VER -y
 	apt_cache_update
 	apt-get install build-essential gcc g++ -y
 	apt-get install libcurl3-openssl-dev -y
@@ -222,6 +239,7 @@ echo -e "# Welcome to \033[1mNGINX+PHP+MariaDB\033[0m Installer for Ubuntu/Debia
 echo "---------------------------------------------------------------"
 select_nginx
 select_mariadb
+select_php
 
 echo ""
 echo "---------------------------------------------------------------"
