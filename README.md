@@ -10,7 +10,7 @@ Ubuntu (>= 11.04), Debian, Linux Mint (LDME/Nadia)
 # Packages
 
 * nginx web server (stable/development, with config-tweak)
-* php 5.4 (the latest version) -> php-fpm(fastcgi process manager)
+* php 5.4(old stable version) or 5.5(the latest version) -> php-fpm(fastcgi process manager)
 * mariadb (5.5-stable / 10.0-alpha, better than MySQL)
 * phpMyAdmin (the latest version)
 
