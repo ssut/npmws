@@ -9,6 +9,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 OS=$(awk '/DISTRIB_ID=/' /etc/*-release | sed 's/DISTRIB_ID=//' | tr '[:upper:]' '[:lower:]')
+CODENAME=$(awk '/DISTRIB_CODENAME=/' /etc/*-release | sed 's/DISTRIB_CODENAME=//' | tr '[:upper:]' '[:lower:]')
 NGINX_PPA=0
 MARIADB_VER="5.5"
 PHP_VER="php5-oldstable"
@@ -137,10 +138,10 @@ function install_mariadb {
 	
 	if [ "$MARIADB_VER" == "5.5" ]; then
 		apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-		add-apt-repository 'deb http://mirror.yongbok.net/mariadb/repo/10.0/ubuntu raring main' -y
+		add-apt-repository 'deb http://ftp.kaist.ac.kr/mariadb/repo/10.0/ubuntu ${CODENAME} main' -y
 	elif [ "$MARIADB_VER" == "10.0" ]; then
 		apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-		add-apt-repository 'deb http://mirror.yongbok.net/mariadb/repo/10.0/ubuntu precise main' -y
+		add-apt-repository 'deb http://ftp.kaist.ac.kr/mariadb/repo/10.0/ubuntu ${CODENAME} main' -y
 	fi
 	
 	apt_cache_update
@@ -224,9 +225,9 @@ nginx-config
 function install_phpmyadmin {
 	printMessage "INSTALLING PHPMYADMIN"
 	if [ -f /usr/bin/axel ]; then
-		axel "http://d.isdev.kr/skydrivedl.php?id=4AC97C30D70CBFEF%21250&file=phpMyAdmin-3.5.8-all-languages.tar.gz" -o /usr/share/nginx/html/pma.tar.gz
+		axel "http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin/4.1.7/phpMyAdmin-4.1.7-all-languages.zip/download" -o /usr/share/nginx/html/pma.tar.gz
 	else
-		wget "http://d.isdev.kr/skydrivedl.php?id=4AC97C30D70CBFEF%21250&file=phpMyAdmin-3.5.8-all-languages.tar.gz" -O /usr/share/nginx/html/pma.tar.gz
+		wget "http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin/4.1.7/phpMyAdmin-4.1.7-all-languages.zip/download" -O /usr/share/nginx/html/pma.tar.gz
 	fi
 	tar zxf /usr/share/nginx/html/pma.tar.gz -C /usr/share/nginx/html/
 	mv /usr/share/nginx/html/phpMyAdmin-*/ /usr/share/nginx/html/phpmyadmin/
