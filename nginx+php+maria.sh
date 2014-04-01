@@ -1,7 +1,7 @@
 #!/bin/bash
 #######################################################
 ## NGINX + PHP + MariaDB Installer for Ubuntu/Debian ##
-## By. previrtu (previrtu@isdev.kr)                  ##
+## By. ssut (ssut@ssut.me)                           ##
 #######################################################
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root :(" 
@@ -284,7 +284,7 @@ echo "	/etc/mysql/"
 echo "---------------------------------------------------------------"
 echo "* phpMyAdmin: http://localhost/phpmyadmin"
 echo "---------------------------------------------------------------"
-echo -e "\033[37m  NGINX+PHP+MariaDB by Previrtu(previrtu@isdev.kr)\033[0m"
+echo -e "\033[37m  NGINX+PHP+MariaDB by ssut(ssut@ssut.me)\033[0m"
 echo "---------------------------------------------------------------"
 
 
