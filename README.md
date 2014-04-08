@@ -9,7 +9,7 @@ Ubuntu (>= 11.04), Debian, Linux Mint (LDME/Nadia)
 
 # Packages
 
-* nginx web server (stable/development, with config-tweak)
+* nginx web server - stable/development, with some tasty tweaks :)
 * php 5.4(old stable version) or 5.5(the latest version) -> php-fpm(fastcgi process manager)
 * mariadb (5.5-stable / 10.0-alpha, better than MySQL)
 * phpMyAdmin (the latest version)
@@ -27,18 +27,18 @@ Ubuntu (>= 11.04), Debian, Linux Mint (LDME/Nadia)
 * mysqli
 * xdebug
 * pear
-* apc (performance)
+* apc (for performance improvement)
 
 # Installation
 
 1. You can install this via the command line with either `curl` or `wget`. (Please use `sudo` or `log in as root` to run this command)
 * via `curl`
- `curl https://raw.github.com/Previrtu/npmws/master/nginx+php+maria.sh`
+ `curl https://raw.github.com/Previrtu/npmws/master/npmws.sh`
 * via `wget`
- `wget https://raw.github.com/Previrtu/npmws/master/nginx+php+maria.sh`
+ `wget https://raw.github.com/Previrtu/npmws/master/npmws.sh`
 * change permission and execute script.
- `chmod +x nginx+php+maria.sh`
- `./nginx+php+maria.sh`
+ `chmod +x npmws.sh`
+ `./npmws.sh`
 
 2. Select nginx/mariadb version.
 ```bash
