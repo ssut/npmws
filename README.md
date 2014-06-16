@@ -1,20 +1,20 @@
-# What is NPMWS ?
+# NPMWS
 
 NPMWS is "NGINX+PHP+MariaDB Web Server Installer".
-(NPMWS is not Node.js Package Manager)
+(NPMWS is not Node.js Package Manager :p)
 
 # Support OS
 
 Ubuntu, Debian, Linux Mint (LDME/Nadia)
 
-Does not support [end of maintenance ubuntu versions](http://www.ubuntu.com/info/release-end-of-life)
+Does not support [end of maintenance ubuntu versions](http://www.ubuntu.com/info/release-end-of-life).
 
 # Packages
 
 * nginx web server - stable/development, with some tasty tweaks :)
-* php 5.4(old stable version) or 5.5(the latest version) -> php-fpm(fastcgi process manager)
-* mariadb (5.5-stable / 10.0-alpha, better than MySQL)
-* phpMyAdmin (the latest version)
+* php 5.4(old stable version) or 5.5(the latest version), works with php-fpm(fastcgi process manager) pool
+* mariadb (5.5-stable / 10.0-alpha, maybe better than Oracle MySQL)
+* phpMyAdmin (the latest version from official sourceforge repository)
 
 # PHP Extensions
 
@@ -34,13 +34,10 @@ Does not support [end of maintenance ubuntu versions](http://www.ubuntu.com/info
 # Installation
 
 1. You can install this via the command line with either `curl` or `wget`. (Please use `sudo` or `log in as root` to run this command)
-* via `curl`
- `curl https://raw.github.com/Previrtu/npmws/master/npmws.sh`
-* via `wget`
- `wget https://raw.github.com/Previrtu/npmws/master/npmws.sh`
-* change permission and execute script.
- `chmod +x npmws.sh`
- `./npmws.sh`
+* via **curl**: 
+ `bash <(curl -s https://raw.github.com/ssut/npmws/master/npmws.sh)`
+* via **wget**: 
+ `bash <(wget -qO- https://raw.github.com/ssut/npmws/master/npmws.sh)`
 
 2. Select nginx/mariadb version.
 ```bash
@@ -57,4 +54,9 @@ Does not support [end of maintenance ubuntu versions](http://www.ubuntu.com/info
 
 3. During installation, Prompt for a password or require some action on the keyboard.
 
+# License
+
+**npmws** is licensed under the **GNU AGPL License v3**.
+
+Please check **LICENSE** file on github.
 
