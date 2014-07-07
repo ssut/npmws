@@ -231,7 +231,6 @@ http {
 nginx-config
     
     chmod 755 /etc/nginx/nginx.conf
-    chmod 755 /etc/nginx/sites-available/default
 
     chmod -R 777 /usr/share/nginx/html/*
     chmod 707 /usr/share/nginx/html
@@ -245,7 +244,7 @@ function install_phpmyadmin {
     else
         wget "http://sourceforge.net/projects/phpmyadmin/files/latest/download" -O /usr/share/nginx/html/pma.zip
     fi
-    unzip /usr/share/nginx/html/pma.zip -d /usr/share/nginx/html/ -o
+    unzip -o /usr/share/nginx/html/pma.zip -d /usr/share/nginx/html/
     mv /usr/share/nginx/html/phpMyAdmin-*/ /usr/share/nginx/html/phpmyadmin/
     chmod -R 755 /usr/share/nginx/html/phpmyadmin/
 }
