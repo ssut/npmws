@@ -25,7 +25,7 @@ def main():
                                preexec_fn=os.setsid)
     def write_string(stdin, string):
         stdin.write(string)
-        string = string.replace("\\", "\\\\")
+        string = string.replace("\n", "\\n")
         sys.stdout.write(' \033[1m[send a key: ' + string + "]\033[0m ")
         sys.stdout.flush()
 
@@ -38,7 +38,7 @@ def main():
             nextline += char
             if char == ':' or char == '?' or char == '\n':
                 break
-        sys.stdout.write(nextline)
+        sys.stdout.write("line: " + nextline)
         sys.stdout.flush()
         if process.poll() != None:
             break
