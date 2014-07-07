@@ -126,6 +126,9 @@ function install_php5 {
 
     # Install php5-apcu
     apt-get install php5-apcu -y
+    if [ "$?" == "1" ]; then
+        apt-get install php-apc -y
+    fi
 }
 
 function install_mariadb {
