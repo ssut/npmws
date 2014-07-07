@@ -1,14 +1,11 @@
 language: python
-env:
-  - TRAVIS_CI=1
-  - DEBIAN_FRONTEND=noninteractive
 python:
   - "2.7"
 before_script:
   - export DEBIAN_FRONTEND=noninteractive
   - sudo rm -f /etc/mysql/my.cnf
   - sudo apt-get purge mysql-server mysql-client -y
-script: TRAVIS_CI=1 sudo python test/test.py
+script: DEBIAN_FRONTEND=noninteractive sudo python test/test.py
 notifications:
   email: false
   irc: "irc.freenode.net#ssut"
