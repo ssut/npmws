@@ -34,7 +34,7 @@ def main():
             write_string(process.stdin, '1\n') 
         elif '(y/n)' in nextline:
             write_string(process.stdin, 'y\n')
-        elif '] :' in nextline:  # APC
+        elif '] :' in nextline or '] ?' in nextline:  # APC or else
             write_string(process.stdin, '\n')
         elif 'Installed' in nextline:
             break
