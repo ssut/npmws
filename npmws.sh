@@ -241,7 +241,7 @@ function install_phpmyadmin {
     else
         wget "http://sourceforge.net/projects/phpmyadmin/files/latest/download" -O /usr/share/nginx/html/pma.zip
     fi
-    unzip /usr/share/nginx/html/pma.tar.gz -d /usr/share/nginx/html/
+    unzip /usr/share/nginx/html/pma.tar.gz -d /usr/share/nginx/html/ -o
     mv /usr/share/nginx/html/phpMyAdmin-*/ /usr/share/nginx/html/phpmyadmin/
     chmod -R 755 /usr/share/nginx/html/phpmyadmin/
 }
