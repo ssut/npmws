@@ -141,10 +141,10 @@ function install_mariadb {
     
     if [ "$MARIADB_VER" == "10.0" ]; then
         apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-        add-apt-repository 'deb http://ftp.kaist.ac.kr/mariadb/repo/10.0/ubuntu ${CODENAME} main' -y
+        add-apt-repository "deb http://ftp.kaist.ac.kr/mariadb/repo/10.0/ubuntu ${CODENAME} main" -y
     elif [ "$MARIADB_VER" == "10.1" ]; then
         apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-        add-apt-repository 'deb http://ftp.kaist.ac.kr/mariadb/repo/10.1/ubuntu ${CODENAME} main' -y
+        add-apt-repository "deb http://ftp.kaist.ac.kr/mariadb/repo/10.1/ubuntu ${CODENAME} main" -y
     fi
     
     apt_cache_update
