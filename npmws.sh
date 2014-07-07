@@ -62,8 +62,10 @@ function select_mariadb {
 function select_php {
     echo ""
     printMessage "Select PHP version"
-    echo "  1) 5.4 << Recommend"
+    echo "  1) 5.4"
     echo "  2) 5.5"
+    echo "  WARNING: Ubuntu 14.04 trusty is not support php-oldstable(5.4)"
+    echo "           Will be installed php 5.5 when you choose php 5.4 (There is no choice)"
     echo -n "Enter: "
     read PHP_SELECT
     if [ "$PHP_SELECT" != 1 ] && [ "$PHP_SELECT" != 2 ]; then
