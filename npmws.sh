@@ -242,12 +242,13 @@ nginx-config
 
 function install_phpmyadmin {
     printMessage "INSTALLING PHPMYADMIN"
+    apt-get install unzip -y
     if [ -f /usr/bin/axel ]; then
-        axel "http://sourceforge.net/projects/phpmyadmin/files/latest/download" -o /usr/share/nginx/html/pma.tar.gz
+        axel "http://sourceforge.net/projects/phpmyadmin/files/latest/download" -o /usr/share/nginx/html/pma.zip
     else
-        wget "http://sourceforge.net/projects/phpmyadmin/files/latest/download" -O /usr/share/nginx/html/pma.tar.gz
+        wget "http://sourceforge.net/projects/phpmyadmin/files/latest/download" -O /usr/share/nginx/html/pma.zip
     fi
-    tar zxf /usr/share/nginx/html/pma.tar.gz -C /usr/share/nginx/html/
+    unzip /usr/share/nginx/html/pma.tar.gz -d /usr/share/nginx/html/
     mv /usr/share/nginx/html/phpMyAdmin-*/ /usr/share/nginx/html/phpmyadmin/
     chmod -R 755 /usr/share/nginx/html/phpmyadmin/
 }
