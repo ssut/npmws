@@ -69,9 +69,9 @@ function select_php {
     if [ "$PHP_SELECT" != 1 ] && [ "$PHP_SELECT" != 2 ]; then
         select_php
     elif [ "$PHP_SELECT" == 1 ]; then
-        PHP_VER = "php5-oldstable"
+        PHP_VER="php5-oldstable"
     elif [ "$PHP_SELECT" == 2 ]; then
-        PHP_VER = "php5"
+        PHP_VER="php5"
     fi
 }
 
