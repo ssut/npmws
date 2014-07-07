@@ -12,7 +12,7 @@ OS=$(awk '/DISTRIB_ID=/' /etc/*-release | sed 's/DISTRIB_ID=//' | tr '[:upper:]'
 CODENAME=$(awk '/DISTRIB_CODENAME=/' /etc/*-release | sed 's/DISTRIB_CODENAME=//' | tr '[:upper:]' '[:lower:]')
 PROCESS_COUNT=$(grep -c ^processor /proc/cpuinfo)
 NGINX_PPA=0
-MARIADB_VER="5.5"
+MARIADB_VER="10.0"
 PHP_VER="php5-oldstable"
 #if [ "$OS" != "ubuntu" ] && [ "$OS" != "debian" ] && [ "$OS" != "mint" ]; then
 if [ -f /usr/bin/apt-get ] && [ -f /usr/bin/aptitude ]; then
@@ -46,16 +46,16 @@ function select_nginx {
 function select_mariadb {
     echo ""
     printMessage "Select MariaDB version"
-    echo "  1) 5.5 Stable << Recommend"
-    echo "  2) 10.0 Alpha"
+    echo "  1) 10.0 Stable << Recommend"
+    echo "  2) 10.1 Alpha"
     echo -n "Enter: "
     read MARIADB_SELECT
     if [ "$MARIADB_SELECT" != 1 ] && [ "$MARIADB_SELECT" != 2 ]; then
         select_mariadb
     elif [ "$MARIADB_SELECT" == 1 ]; then
-        MARIADB_VER="5.5"
-    elif [ "$MARIADB_SELECT" == 2 ]; then
         MARIADB_VER="10.0"
+    elif [ "$MARIADB_SELECT" == 2 ]; then
+        MARIADB_VER="10.1"
     fi
 }
 
@@ -137,12 +137,12 @@ function install_php5 {
 function install_mariadb {
     printMessage "INSTALLING MariaDB"
     
-    if [ "$MARIADB_VER" == "5.5" ]; then
-        apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-        add-apt-repository 'deb http://ftp.kaist.ac.kr/mariadb/repo/5.5/ubuntu ${CODENAME} main' -y
-    elif [ "$MARIADB_VER" == "10.0" ]; then
+    if [ "$MARIADB_VER" == "10.0" ]; then
         apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
         add-apt-repository 'deb http://ftp.kaist.ac.kr/mariadb/repo/10.0/ubuntu ${CODENAME} main' -y
+    elif [ "$MARIADB_VER" == "10.1" ]; then
+        apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
+        add-apt-repository 'deb http://ftp.kaist.ac.kr/mariadb/repo/10.1/ubuntu ${CODENAME} main' -y
     fi
     
     apt_cache_update
@@ -302,5 +302,3 @@ echo "* phpMyAdmin: http://localhost/phpmyadmin"
 echo "---------------------------------------------------------------"
 echo -e "\033[37m  NGINX+PHP+MariaDB by ssut(ssut@ssut.me)\033[0m"
 echo "---------------------------------------------------------------"
-
-
