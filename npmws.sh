@@ -125,15 +125,8 @@ function install_php5 {
     # Fix dependency
     apt-get purge apache2 libapache2-mod-php5 -y
 
-    printMessage "Please press return key."
-    sleep 1
-    pecl install apc
-    if [ -d "/etc/php5/mods-available/" ]; then
-        echo "extension=apc.so" >> /etc/php5/mods-available/apc.ini
-        ln -s /etc/php5/mods-available/apc.ini /etc/php5/conf.d/apc.ini
-    elif [ -d "/etc/php5/conf.d/" ]; then
-        echo "extension=apc.so" >> /etc/php5/conf.d/apc.ini
-    fi
+    # Install php5-apcu
+    apt-get install php5-apcu -y
 }
 
 function install_mariadb {
