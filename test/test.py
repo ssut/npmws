@@ -25,7 +25,8 @@ def main():
                                preexec_fn=os.setsid)
     def write_string(stdin, string):
         stdin.write(string)
-        sys.stdout.write(string)
+        string = string.replace("\\", "\\\\")
+        sys.stdout.write(' \033[1m[send a key: ' + string + "]\033[0m ")
         sys.stdout.flush()
 
     while True:
