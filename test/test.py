@@ -35,7 +35,7 @@ def main():
         while True:
             char = process.stdout.read(1)
             nextline += char
-            if char == ':' or char == '\n':
+            if char == ':' or char == '?' or char == '\n':
                 break
         sys.stdout.write(nextline)
         sys.stdout.flush()
