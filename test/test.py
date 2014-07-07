@@ -9,6 +9,15 @@ def main():
     global process
     cwd = os.path.dirname(os.path.realpath(__file__))
     command = os.path.join(cwd, '..', 'npmws.sh')
+
+    if 'TRAVIS_CI' in os.environ:
+        original = ''
+        with open(command, 'r') as fp:
+            original = fp.read()
+        new = original.replace('ftp.kaist.ac.kr', 'sfo1.mirrors.digitalocean.com')
+        with open(command, 'w') as fp:
+            fp.write(new)
+
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,
                                stdin=subprocess.PIPE, bufsize=0,
                                preexec_fn=os.setsid)

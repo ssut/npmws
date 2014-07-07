@@ -1,4 +1,6 @@
 language: python
+env:
+  - TRAVIS_CI=1
 python:
   - "2.7"
 before_script:
