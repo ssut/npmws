@@ -143,7 +143,9 @@ function install_mariadb {
     fi
     
     apt_cache_update
-    apt-get install mariadb-server -y
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get -o Dpkg::Options::="--force-confnew" -q -y install mariadb-server
+    apt-get -o Dpkg::Options::="--force-confnew" -q -y install mariadb-client
 
     printMessage "INSTALLING PHP5-MySQL (Extension for connect to database server)"
     apt-get install php5-mysql -y

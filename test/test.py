@@ -38,8 +38,7 @@ def main():
             nextline += char
             if char == ':' or char == '?' or char == '\n':
                 break
-        sys.stdout.write("line: " + nextline)
-        print '] ?' in nextline
+        sys.stdout.write(nextline)
         sys.stdout.flush()
         if process.poll() != None:
             break
