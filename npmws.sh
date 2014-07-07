@@ -92,7 +92,7 @@ function check_py_apt {
     else
         echo "- add-apt-repository: not exist"
         echo "# INSTALLING PYTHON-SOFTWARE-PROPERTIES"
-        apt-get install python-software-properties -y
+        apt-get install software-properties-common python-software-properties -y
     fi
 }
 
