@@ -18,8 +18,7 @@ PHP_VER="php5-oldstable"
 if [ -f /usr/bin/apt-get ] && [ -f /usr/bin/aptitude ]; then
     echo "Detected $OS"
 else
-    echo "this script is only executable from Ubuntu/MintLinux/Debian."
-    exit
+    echo "Warning: this script is only executable from Ubuntu/MintLinux/Debian."
 fi
 
 function printMessage() {
