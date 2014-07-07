@@ -10,13 +10,15 @@ def main():
     cwd = os.path.dirname(os.path.realpath(__file__))
     command = os.path.join(cwd, '..', 'npmws.sh')
 
-    if 'TRAVIS_CI' in os.environ:
-        original = ''
-        with open(command, 'r') as fp:
-            original = fp.read()
+    if os.environ.get('TRAVIS_CI'):
+        print 'travis detected'
+        fp = open(command, 'r')
+        original = fp.read()
+        fp.close()
         new = original.replace('ftp.kaist.ac.kr', 'sfo1.mirrors.digitalocean.com')
-        with open(command, 'w') as fp:
-            fp.write(new)
+        fp = open(command, 'w')
+        fp.write(new)
+        fp.close()
 
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,
                                stdin=subprocess.PIPE, bufsize=0,
@@ -78,6 +80,7 @@ def do_test(code):
     exit(0)
 
 if __name__ == '__main__':
+    print os.environ
     try:
         main()
     except KeyboardInterrupt:
