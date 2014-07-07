@@ -10,7 +10,7 @@ def main():
     cwd = os.path.dirname(os.path.realpath(__file__))
     command = os.path.join(cwd, '..', 'npmws.sh')
 
-    if os.environ.get('TRAVIS_CI'):
+    if os.environ.get('TRAVIS') or os.environ.get('CI'):
         print 'travis detected'
         fp = open(command, 'r')
         original = fp.read()
