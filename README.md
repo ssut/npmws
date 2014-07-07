@@ -1,4 +1,4 @@
-# NPMWS
+# NPMWS [![Build Status](https://travis-ci.org/ssut/npmws.svg?branch=master)](https://travis-ci.org/ssut/npmws)
 
 NPMWS is "NGINX+PHP+MariaDB Web Server Installer".
 (NPMWS is not Node.js Package Manager :p)
