@@ -3,6 +3,7 @@ import sys
 import shlex
 import signal
 import os
+import urllib
 
 process = None
 def main():
@@ -72,10 +73,14 @@ def do_test(code):
     assert 'apc' in phpinfo, 'PHP-APC may not installed correctly'
     assert 'mysql' in phpinfo, 'PHP-MySQL may not installed correctly'
     try:
-        import urllib
         urllib.urlopen('http://127.0.0.1')
     except:
         assert False, 'nginx daemon may not started correctly'
+
+    try:
+        urllib.urlopen('http://127.0.0.1/phpmyadmin')
+    except:
+        assert False, 'phpMyAdmin may not installed correctly'
 
     print 'All test passed!'
     exit(0)
