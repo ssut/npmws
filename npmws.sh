@@ -170,11 +170,17 @@ nginx-config
 
     cat <<nginx-config > /etc/nginx/conf.d/localhost
 server {
+    # if you want to make a server using ssl
+    # create one more server using this copy and
+    # change below listen code to "listen 443 ssl spdy;"
     listen 80 default_server;
     
+    # root path
     root /usr/share/nginx/html;
+    # default page (first is high priority)
     index index.php index.html index.htm;
     
+    # this is bind address
     server_name localhost 127.0.0.1;
     
     include php;
@@ -183,7 +189,9 @@ nginx-config
 
     mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.orig
     cat <<nginx-config > /etc/nginx/nginx.conf
+# warning: don't edit nginx user
 user www-data;
+# set process count to auto
 worker_processes auto;
 worker_rlimit_nofile 65000;
 #pid /run/nginx.pid;
@@ -197,7 +205,7 @@ events {
 http {
     sendfile on;
     tcp_nopush on;
-    tcp_nodelay on;
+    tcp_nodelay on; # disable nagle algorithm
     
     keepalive_timeout 5;
     client_header_timeout 20;
@@ -212,9 +220,11 @@ http {
     default_type text/html;
     charset UTF-8;
     
+    # log file will be separated by ubuntu linux (.0, .1, .2 ...)
     access_log /var/log/nginx/access.log;
     error_log /var/log/nginx/error.log;
     
+    # enable gzip compression for improve page speed
     gzip on;
     gzip_disable "msie6";
     gzip_buffers 16 8k;
