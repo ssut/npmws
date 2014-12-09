@@ -5,6 +5,7 @@
 #######################################################
 if [[ $EUID -ne 0 ]]; then
     echo "This script must be run as root :(" 
+    echo "Please try running this command again as root user"
     exit 1
 fi
 
@@ -18,7 +19,7 @@ PHP_VER="php5-oldstable"
 if [ -f /usr/bin/apt-get ] && [ -f /usr/bin/aptitude ]; then
     echo "Detected $OS"
 else
-    echo "Warning: this script is only executable from Ubuntu/MintLinux/Debian."
+    echo "Warning: This script is made for Debian based Linux."
 fi
 
 function printMessage() {
@@ -63,8 +64,7 @@ function select_php {
     printMessage "Select PHP version"
     echo "  1) 5.4"
     echo "  2) 5.5"
-    echo "  WARNING: Ubuntu 14.04 trusty is not support php-oldstable(5.4)"
-    echo "           Will be installed php 5.5 when you choose php 5.4 (There is no choice)"
+    echo "  WARNING: Ubuntu 14.04 trusty does not support php-oldstable(5.4)"
     echo -n "Enter: "
     read PHP_SELECT
     if [ "$PHP_SELECT" != 1 ] && [ "$PHP_SELECT" != 2 ]; then
@@ -89,9 +89,8 @@ function func_install {
 
 function check_py_apt {
     if [ -f /usr/bin/add-apt-repository ]; then
-        echo "- add-apt-repository: exist"
     else
-        echo "- add-apt-repository: not exist"
+        echo "- add-apt-repository does not exist"
         echo "# INSTALLING PYTHON-SOFTWARE-PROPERTIES"
         apt-get install software-properties-common python-software-properties -y
     fi
@@ -147,7 +146,7 @@ function install_mariadb {
     apt-get -o Dpkg::Options::="--force-confnew" -q -y install mariadb-server
     apt-get -o Dpkg::Options::="--force-confnew" -q -y install mariadb-client
 
-    printMessage "INSTALLING PHP5-MySQL (Extension for connect to database server)"
+    printMessage "INSTALLING PHP5-MySQL"
     apt-get install php5-mysql -y
 }
 
@@ -170,17 +169,15 @@ nginx-config
 
     cat <<nginx-config > /etc/nginx/conf.d/localhost
 server {
-    # if you want to make a server using ssl
-    # create one more server using this copy and
-    # change below listen code to "listen 443 ssl spdy;"
+    # Add the "ssl spdy" to turn on the SSL
     listen 80 default_server;
     
-    # root path
+    # Root path
     root /usr/share/nginx/html;
-    # default page (first is high priority)
+    # Default index
     index index.php index.html index.htm;
     
-    # this is bind address
+    # Bind address
     server_name localhost 127.0.0.1;
     
     include php;
@@ -189,12 +186,10 @@ nginx-config
 
     mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.orig
     cat <<nginx-config > /etc/nginx/nginx.conf
-# warning: don't edit nginx user
 user www-data;
-# set process count to auto
 worker_processes auto;
 worker_rlimit_nofile 65000;
-#pid /run/nginx.pid;
+pid /run/nginx.pid;
 
 events {
     worker_connections 2048;
@@ -211,7 +206,7 @@ http {
     client_header_timeout 20;
     client_body_timeout 20;
     reset_timedout_connection on;
-    send_timeout 20; # change this value if php occurs timeout.
+    send_timeout 20;
     
     types_hash_max_size 2048;
     server_tokens off;
@@ -224,7 +219,7 @@ http {
     access_log /var/log/nginx/access.log;
     error_log /var/log/nginx/error.log;
     
-    # enable gzip compression for improve page speed
+    # enable gzip compression for FEO
     gzip on;
     gzip_disable "msie6";
     gzip_buffers 16 8k;
@@ -269,7 +264,7 @@ select_php
 
 echo ""
 echo "---------------------------------------------------------------"
-echo "This script will be install:"
+echo "Here are install option you have selected:"
 NGX_COMMENT="NGINX"
 [ "$NGINX_PPA" == 1 ] && NGX_VER="Stable" || NGX_VER="Development"
 echo "  $NGX_COMMENT $NGX_VER"
