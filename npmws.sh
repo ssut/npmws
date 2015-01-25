@@ -89,6 +89,7 @@ function func_install {
 
 function check_py_apt {
     if [ -f /usr/bin/add-apt-repository ]; then
+        echo "OK. Let's Go."
     else
         echo "- add-apt-repository does not exist"
         echo "# INSTALLING PYTHON-SOFTWARE-PROPERTIES"
