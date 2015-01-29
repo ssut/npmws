@@ -64,6 +64,7 @@ function select_php {
     printMessage "Select PHP version"
     echo "  1) 5.4"
     echo "  2) 5.5"
+    echo "  3) 5.6"
     echo "  WARNING: Ubuntu 14.04 trusty does not support php-oldstable(5.4)"
     echo -n "Enter: "
     read PHP_SELECT
@@ -73,6 +74,8 @@ function select_php {
         PHP_VER="php5-oldstable"
     elif [ "$PHP_SELECT" == 2 ]; then
         PHP_VER="php5"
+    elif [ "$PHP_SELECT" == 3 ]; then
+        PHP_VER="php5-5.6"
     fi
 }
 
