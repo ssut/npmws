@@ -35,7 +35,7 @@ Does not support [end of maintenance ubuntu versions](http://www.ubuntu.com/info
 
 1. You can install this via the command line with either `curl` or `wget`. (Please use `sudo` or `log in as root` to run this command)
 * via **curl**: 
- `bash <(curl -s https://raw.github.com/ssut/npmws/master/npmws.sh)`
+ `bash <(curl -sL https://raw.github.com/ssut/npmws/master/npmws.sh)`
 * via **wget**: 
  `bash <(wget -qO- https://raw.github.com/ssut/npmws/master/npmws.sh)`
 
